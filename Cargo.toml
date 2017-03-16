@@ -1,0 +1,8 @@
+[package]
+name = "parenchyma-nn"
+version = "0.0.1"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+
+[dependencies.parenchyma]
+path = "../parenchyma"
+version = "0.0.3"
