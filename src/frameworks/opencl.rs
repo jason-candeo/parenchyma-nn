@@ -25,7 +25,7 @@ impl NN for OpenCLContext<NNPackage> {
         sigmoid.set_arg(0, tensor_x)?;
         sigmoid.set_arg(1, tensor_result)?;
 
-        let global_work_size = &[1];
+        let global_work_size = &[x.capacity()];
         let local_work_size = &[];
 
         // TODO
