@@ -5,4 +5,4 @@ authors = ["Jony <jonysy@users.noreply.github.com>"]
 
 [dependencies.parenchyma]
 path = "../parenchyma"
-version = "0.0.32"
+version = "0.0.33"

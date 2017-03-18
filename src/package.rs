@@ -1,6 +1,6 @@
 use parenchyma::ExtensionPackage;
 use std::fmt;
-use super::NN;
+use super::NNExtension;
 use super::frameworks::opencl::OpenCLNNPackage;
 
 pub union NNPackage {
@@ -11,7 +11,7 @@ impl ExtensionPackage for NNPackage {
 
     const PACKAGE_NAME: &'static str = "parenchyma/nn";
 
-    type Extension = NN;
+    type Extension = NNExtension;
 }
 
 impl fmt::Debug for NNPackage {

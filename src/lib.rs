@@ -3,7 +3,7 @@
 
 extern crate parenchyma;
 
-pub use self::extension::NN;
+pub use self::extension::{NN, NNExtension};
 pub use self::package::NNPackage;
 
 mod extension;

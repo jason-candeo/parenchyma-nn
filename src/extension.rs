@@ -1,7 +1,7 @@
 use parenchyma::{Result, SharedTensor};
 
 /// Provides the functionality for a backend to support Neural Network related operations.
-pub trait NN<F = f32> {
+pub trait NN<F> {
     /// Computes the [sigmoid function] over the input tensor `x`.
     ///
     /// Saves the `result`.
@@ -21,3 +21,7 @@ pub trait NN<F = f32> {
     //     result: &SharedTensor<F>, 
     //     result_diff: &mut SharedTensor<F>) -> Result;
 }
+
+pub trait NNExtension: NN<f32> + NN<f64> { }
+
+impl<I> NNExtension for I where I: NN<f32> + NN<f64> { }
