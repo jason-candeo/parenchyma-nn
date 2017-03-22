@@ -3,11 +3,9 @@
 
 extern crate parenchyma;
 
-pub use self::extension::{NN, NNExtension};
-pub use self::package::NNPackage;
+pub mod extension;
+pub mod package;
 
-mod extension;
 mod frameworks;
-mod package;
 
-pub type Backend = parenchyma::Backend<NNPackage>;
+pub type Backend = parenchyma::Backend<package::ParenchymaDeep>;

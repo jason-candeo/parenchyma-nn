@@ -1,22 +1,22 @@
+use extension::Deep;
+use frameworks::cl;
 use parenchyma::ExtensionPackage;
 use std::fmt;
-use super::NNExtension;
-use super::frameworks::opencl::OpenCLNNPackage;
 
-pub union NNPackage {
-    pub cl: OpenCLNNPackage,
+pub union ParenchymaDeep {
+    pub cl: cl::Package,
 }
 
-impl ExtensionPackage for NNPackage {
+impl ExtensionPackage for ParenchymaDeep {
 
-    const PACKAGE_NAME: &'static str = "parenchyma/nn";
+    const PACKAGE_NAME: &'static str = "parenchyma/dnn";
 
-    type Extension = NNExtension;
+    type Extension = Deep;
 }
 
-impl fmt::Debug for NNPackage {
+impl fmt::Debug for ParenchymaDeep {
 
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "NNPackage")
+        write!(f, "ParenchymaDeep")
     }
 }
