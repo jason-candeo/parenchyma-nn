@@ -128,8 +128,8 @@ impl Build<OpenCLContext<Uninitialized>> for ParenchymaDeep {
     fn build(cx: &mut OpenCLContext<Uninitialized>) -> Result<ParenchymaDeep> {
 
         let program = cx.create_program(&[
-            include_str!("../../source/cl/activation.cl"),
-            include_str!("../../source/cl/activationBackward.cl")
+            include_str!("source/activation.cl"),
+            include_str!("source/activationBackward.cl")
         ])?;
 
         let cl_package = Package {
