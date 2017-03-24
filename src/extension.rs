@@ -1,7 +1,7 @@
 use parenchyma::{Result, SharedTensor};
 
 /// Provides the functionality for a backend to support DNN related operations.
-pub trait Deep: Activation<f32>+Activation<f64>+ActivationBackward<f32>+ActivationBackward<f64> { }
+pub trait Deep: Forward + Backward { }
 
 pub enum ActivationMode {
     Tanh,
@@ -10,8 +10,7 @@ pub enum ActivationMode {
     Elu,
 }
 
-/// Provides activation functions.
-pub trait Activation<F> {
+pub trait Forward<F = f32> {
 
     fn activation(&self, ActivationMode, &SharedTensor<F>, output: &mut SharedTensor<F>) -> Result;
 
@@ -48,50 +47,82 @@ pub trait Activation<F> {
     fn elu(&self, input: &SharedTensor<F>, output: &mut SharedTensor<F>) -> Result {
         self.activation(ActivationMode::Elu, input, output)
     }
+
+    /// Computes a [CNN convolution] over the input tensor `x`, and then saves the `result`.
+    ///
+    /// [CNN convolution]: https://en.wikipedia.org/wiki/Convolutional_neural_network
+    fn convolution(
+        &self, 
+        filter: &SharedTensor, 
+        x: &SharedTensor, 
+        result: &mut SharedTensor) -> Result {
+
+        unimplemented!()
+    }
+
+    /// Computes a logarithmic softmax over the input tensor `x`, and then saves the `result`.
+    fn log_softmax(&self, x: &SharedTensor<F>, result: &mut SharedTensor<F>) -> Result {
+
+        unimplemented!()
+    }
 }
 
-pub trait ActivationBackward<F> {
+pub trait Backward<F = f32> {
 
     fn activation_backward(
         &self, 
         mode: ActivationMode, 
-        input: &SharedTensor<F>, 
-        input_diff: &SharedTensor<F>, 
-        output_diff: &mut SharedTensor<F>) -> Result;
+        x: &SharedTensor<F>, 
+        x_diff: &SharedTensor<F>, 
+        result_diff: &mut SharedTensor<F>) -> Result;
 
     fn tanh_backward(
         &self, 
-        input: &SharedTensor<F>, 
-        input_diff: &SharedTensor<F>, 
-        output_diff: &mut SharedTensor<F>) -> Result {
+        x: &SharedTensor<F>, 
+        x_diff: &SharedTensor<F>, 
+        result_diff: &mut SharedTensor<F>) -> Result {
 
-        self.activation_backward(ActivationMode::Tanh, input, input_diff, output_diff)
+        self.activation_backward(ActivationMode::Tanh, x, x_diff, result_diff)
     }
 
     fn sigmoid_backward(
         &self, 
-        input: &SharedTensor<F>, 
-        input_diff: &SharedTensor<F>, 
-        output_diff: &mut SharedTensor<F>) -> Result {
+        x: &SharedTensor<F>, 
+        x_diff: &SharedTensor<F>, 
+        result_diff: &mut SharedTensor<F>) -> Result {
 
-        self.activation_backward(ActivationMode::Sigmoid, input, input_diff, output_diff)
+        self.activation_backward(ActivationMode::Sigmoid, x, x_diff, result_diff)
     }
 
     fn relu_backward(
         &self, 
-        input: &SharedTensor<F>, 
-        input_diff: &SharedTensor<F>, 
-        output_diff: &mut SharedTensor<F>) -> Result {
+        x: &SharedTensor<F>, 
+        x_diff: &SharedTensor<F>, 
+        result_diff: &mut SharedTensor<F>) -> Result {
 
-        self.activation_backward(ActivationMode::ReLu, input, input_diff, output_diff)
+        self.activation_backward(ActivationMode::ReLu, x, x_diff, result_diff)
     }
 
     fn elu_backward(
         &self, 
-        input: &SharedTensor<F>, 
-        input_diff: &SharedTensor<F>, 
-        output_diff: &mut SharedTensor<F>) -> Result {
+        x: &SharedTensor<F>, 
+        x_diff: &SharedTensor<F>, 
+        result_diff: &mut SharedTensor<F>) -> Result {
 
-        self.activation_backward(ActivationMode::Elu, input, input_diff, output_diff)
+        self.activation_backward(ActivationMode::Elu, x, x_diff, result_diff)
+    }
+
+    // fn convolution_backward(&self, ..) -> Result {
+
+    //     unimplemented!()
+    // }
+
+    fn log_softmax_backward(
+        &self, 
+        x: &SharedTensor<F>, 
+        x_diff: &SharedTensor<F>, 
+        result_diff: &mut SharedTensor<F>) -> Result {
+
+        unimplemented!()
     }
 }

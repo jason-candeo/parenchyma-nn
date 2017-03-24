@@ -21,7 +21,7 @@ fn main() {
         Backend::try_from(configuration).unwrap()
     };
 
-    let data: Vec<f64> = vec![3.5, 12.4, 0.5, 6.5];
+    let data: Vec<f32> = vec![3.5, 12.4, 0.5, 6.5];
     let length = data.len();
 
     // Initialize two `SharedTensor`s.
